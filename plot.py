@@ -4,6 +4,7 @@ from plotly.graph_objs import *
 
 TARGET = 'com.xcv58.log:'
 MAX_LENGTH = 36000
+MAX_LENGTH = 10000
 
 def usage():
     print 'Please follow the log directory as argument!'
@@ -24,12 +25,14 @@ def oneFile(file):
     print len([i for i in missList if i == 0])
     print len([i for i in missList if i >= 0])
     print sum(missList)
-    return missList[:MAX_LENGTH]
+    return missList
 
 def walk(path):
     files = os.listdir(path)
-    dataList = [oneFile(os.path.join(path, i)) for i in files]
-    data = [Scatter(x=range(len(d)), y=d, name=file) for file, d in zip(files , dataList)]
+    data_list = [oneFile(os.path.join(path, i)) for i in files]
+    MAX_LENGTH = min([len(i) for i in data_list])
+    data_list = [i[:MAX_LENGTH] for i in data_list]
+    data = [Bar(x=range(MAX_LENGTH), y=sorted(d), name=file) for file, d in zip(files , data_list)]
 
     layout = Layout(
         title='SPEC on Board',
@@ -41,7 +44,8 @@ def walk(path):
         yaxis=YAxis(
             title='delay (millisecond)',
             showline=False
-        )
+        ),
+        barmode='stack'
     )
     fig = Figure(data=data, layout=layout)
     plot_url = py.plot(fig, filename='basic-line')
