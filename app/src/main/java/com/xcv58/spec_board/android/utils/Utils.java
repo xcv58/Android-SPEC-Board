@@ -80,7 +80,7 @@ public class Utils {
         @Override
         protected Object doInBackground(Object[] objects) {
             while (SPECIntentService.CONTINUE) {
-                double result = Utils.measure(Utils.measureFFT);
+                double result = Utils.measure(Utils.measureSOR);
                 Utils.debug("result: " + result);
             }
             return null;
