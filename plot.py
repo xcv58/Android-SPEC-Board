@@ -32,7 +32,7 @@ def walk(path):
     data_list = [oneFile(os.path.join(path, i)) for i in files]
     MAX_LENGTH = min([len(i) for i in data_list])
     data_list = [i[:MAX_LENGTH] for i in data_list]
-    data = [Bar(x=range(MAX_LENGTH), y=sorted(d), name=file) for file, d in zip(files , data_list)]
+    data = [Bar(x=range(MAX_LENGTH), y=d, name=file) for file, d in zip(files , data_list)]
 
     layout = Layout(
         title='SPEC on Board',
