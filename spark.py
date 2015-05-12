@@ -60,6 +60,7 @@ def processSparks(tags_set, sparks):
                 pass
             pass
         print
+    print len(sparks)
         # print tags_dict
     pass
 
